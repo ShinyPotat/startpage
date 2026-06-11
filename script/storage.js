@@ -27,7 +27,7 @@ const DEFAULT_USERNAME = "coffeenerd";
 const DEFAULT_WEATHER_LOCATION = "Gurgaon";
 const DEFAULT_WEATHER_UNIT = "celsius";
 const DEFAULT_TIMEZONE = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
-const DEFAULT_SEARCH_ENGINE = "google"; // "google" | "ddg" | "bing"
+const DEFAULT_SEARCH_ENGINE = "google"; // "google" | "ddg" | "bing" | "sp"
 
 const DEFAULT_SHELF_BOOKMARKS = [];
 
@@ -177,6 +177,7 @@ const OVERRIDEABLE_PREFIXES = {
   'ddg':    { label: 'DuckDuckGo',    default: 'https://duckduckgo.com/?q=' },
   'bing':   { label: 'Bing',          default: 'https://www.bing.com/search?q=' },
   'ggl':    { label: 'Google',        default: 'https://www.google.com/search?q=' },
+  'sp':     { label: 'Startpage',     default: 'https://www.startpage.com/do/search?q=' },
   'amazon': { label: 'Amazon',        default: 'https://www.amazon.com/s?k=' },
   'imdb':   { label: 'IMDb',          default: 'https://www.imdb.com/find?q=' },
   'alt':    { label: 'AlternativeTo', default: 'https://alternativeto.net/browse/search/?q=' },
@@ -209,9 +210,9 @@ function saveCustomTags(tags) {
 }
 function getStoredSearchEngine() {
   const stored = localStorage.getItem('searchEngine') || DEFAULT_SEARCH_ENGINE;
-  return ['google', 'ddg', 'bing'].includes(stored) ? stored : DEFAULT_SEARCH_ENGINE;
+  return ['google', 'ddg', 'bing', 'sp'].includes(stored) ? stored : DEFAULT_SEARCH_ENGINE;
 }
 function saveSearchEngine(engine) {
   const normalized = String(engine || '').toLowerCase();
-  localStorage.setItem('searchEngine', ['google', 'ddg', 'bing'].includes(normalized) ? normalized : DEFAULT_SEARCH_ENGINE);
+  localStorage.setItem('searchEngine', ['google', 'ddg', 'bing', 'sp'].includes(normalized) ? normalized : DEFAULT_SEARCH_ENGINE);
 }

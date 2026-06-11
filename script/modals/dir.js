@@ -68,6 +68,7 @@ function resolveDirEngine(engineStr) {
   if (['ggl', 'google'].includes(e)) return 'google';
   if (['ddg', 'duckduckgo'].includes(e)) return 'ddg';
   if (['bing'].includes(e)) return 'bing';
+  if (['sp', 'startpage'].includes(e)) return 'sp';
   return getStoredSearchEngine();
 }
 
@@ -77,6 +78,7 @@ function buildDirUrl(keyword, category, engineOverride) {
   const q = encodeURIComponent(query);
   if (engine === 'ddg')  return `https://duckduckgo.com/?q=${q}`;
   if (engine === 'bing') return `https://www.bing.com/search?q=${q}`;
+  if (engine === 'sp') return `https://www.startpage.com/do/search?q=${q}`;
   return `https://www.google.com/search?q=${q}`;
 }
 
@@ -120,8 +122,8 @@ function _renderDirModal(prefill = {}) {
     const isSelected = !!prefill.engine && btn.dataset.engine === prefill.engine;
     btn.classList.toggle('active-engine', isDefault || isSelected);
     if (btn.dataset.engine === '') {
-      btn.textContent = `Default ({{ ${({ google: 'Google', ddg: 'DDG', bing: 'Bing' }[defaultEngine] || 'Google')} }})`;
-      btn.textContent = `Default (${({ google: 'Google', ddg: 'DDG', bing: 'Bing' }[defaultEngine] || 'Google')})`;
+      btn.textContent = `Default ({{ ${({ google: 'Google', ddg: 'DDG', bing: 'Bing', sp: 'SP' }[defaultEngine] || 'Google')} }})`;
+      btn.textContent = `Default (${({ google: 'Google', ddg: 'DDG', bing: 'Bing', sp: 'SP' }[defaultEngine] || 'Google')})`;
     }
   });
   _updateDirPreview();
@@ -150,7 +152,7 @@ function _updateDirPreview() {
   preview.textContent = cmd;
 
   if (previewUrl) {
-    const engineName = { google: 'Google', ddg: 'DuckDuckGo', bing: 'Bing' }[resolveDirEngine(state.engine)] || 'Google';
+    const engineName = { google: 'Google', ddg: 'DuckDuckGo', bing: 'Bing', sp: 'Startpage' }[resolveDirEngine(state.engine)] || 'Google';
     previewUrl.textContent = state.keyword ? `→ ${engineName} open directory search` : 'Enter a keyword to preview';
   }
 }

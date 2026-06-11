@@ -97,6 +97,7 @@
           <option value="google">Google</option>
           <option value="ddg">DuckDuckGo</option>
           <option value="bing">Bing</option>
+          <option value="sp">Startpage</option>
         </select>
         <p class="config-hint">Used when no prefix is typed (e.g. plain text). Also the default engine for <span class="config-code">dir:</span> searches.</p>
       </div>
@@ -161,6 +162,7 @@
           <div class="help-cmd"><span>ggl:query</span> → Search Google explicitly</div>
           <div class="help-cmd"><span>bing:query</span> → Search Bing</div>
           <div class="help-cmd"><span>ddg:query</span> → Search DuckDuckGo</div>
+          <div class="help-cmd"><span>sp:query</span> → Search Startpage</div>
           <div class="help-cmd"><span>amazon:query</span> → Search Amazon</div>
           <div class="help-cmd"><span>maps:location</span> → Google Maps</div>
           <div class="help-cmd"><span>imdb:movie</span> → Search IMDb</div>
@@ -185,7 +187,7 @@
           <div class="help-cmd"><span>dir/software: keyword</span> → Filter for executables &amp; archives</div>
           <div class="help-cmd"><span>dir/images: keyword</span> → Filter for image files</div>
           <div class="help-cmd"><span>dir/other: keyword</span> → Raw open dir, no file filter</div>
-          <div class="help-cmd" style="margin-top:6px;"><span>dir/cat/ggl:</span> <span>dir/cat/ddg:</span> <span>dir/cat/bing:</span> → Override search engine</div>
+          <div class="help-cmd" style="margin-top:6px;"><span>dir/cat/ggl:</span> <span>dir/cat/ddg:</span> <span>dir/cat/bing:</span> <span>dir/cat/sp:</span> → Override search engine</div>
           <div class="help-cmd" style="margin-top:4px; opacity:0.7;">Aliases: <span>vid</span> <span>video</span> · <span>book</span> <span>ebook</span> · <span>audio</span> <span>mus</span> · <span>soft</span> <span>iso</span> <span>app</span> · <span>img</span> <span>pics</span></div>
           <div class="help-cmd" style="opacity:0.7;">Tab autocomplete works after <span>dir/</span> for categories and engines.</div>
         </div>
@@ -443,6 +445,7 @@
           <button class="dir-engine-btn" data-engine="ggl">Google</button>
           <button class="dir-engine-btn" data-engine="ddg">DuckDuckGo</button>
           <button class="dir-engine-btn" data-engine="bing">Bing</button>
+          <button class="dir-engine-btn" data-engine="sp">Startpage</button>
         </div>
       </div>
 

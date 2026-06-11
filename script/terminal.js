@@ -96,7 +96,7 @@ function getDirAutocompleteSuggestion(value) {
   const afterCatSlash = lower.match(/^dir\/([a-z]+)\/([a-z]*)$/);
   if (afterCatSlash) {
     const typedEng = afterCatSlash[2];
-    const engines = ['ggl', 'ddg', 'bing'];
+    const engines = ['ggl', 'ddg', 'bing', 'sp'];
     // Exact match (e.g. 'dir/media/ggl' → 'dir/media/ggl:')
     const exact = engines.find(e => e === typedEng);
     if (exact) return `dir/${afterCatSlash[1]}/${exact}:`;
@@ -109,7 +109,7 @@ function getDirAutocompleteSuggestion(value) {
   const afterDoubleSlash = lower.match(/^dir\/\/([a-z]*)$/);
   if (afterDoubleSlash) {
     const typedEng = afterDoubleSlash[1];
-    const engines = ['ggl', 'ddg', 'bing'];
+    const engines = ['ggl', 'ddg', 'bing', 'sp'];
     const exact = engines.find(e => e === typedEng);
     if (exact) return `dir//${exact}:`;
     const match = engines.find(e => e.startsWith(typedEng) && e !== typedEng);
@@ -238,9 +238,9 @@ function updateSyntaxHighlight(rawValue) {
   const themeCommands = [':dark', ':black', ':amoled', ':light', ':nord', ':newspaper', ':coffee', ':root', ':neon', ':catppuccin'];
   const knownCommands = [':help', ':bookmarks', ':bm', ':ipconfig', ':ip', ':netspeed', ':speed', ':config', ':customize', ':custom', ':tags', ':dir', ':dirconfig', ':prompts', ':weather', ':time', ':update', ':export', ':import', ':reset', ':history', ':tour', ':hacker', ':cyberpunk', ...themeCommands];
   const versionCommands = [':version', ':ver', ':update'];
-  const knownSearch = /^(r|yt|alt|def|ddg|ggl|bing|amazon|imdb|the|syn|quote|maps|cws|spell|pronounce):/;
+  const knownSearch = /^(r|yt|alt|def|ddg|ggl|bing|sp|amazon|imdb|the|syn|quote|maps|cws|spell|pronounce):/;
   const knownSearchDynamic = customTagPrefixes.length
-    ? new RegExp(`^(r|yt|alt|def|ddg|ggl|bing|amazon|imdb|the|syn|quote|maps|cws|spell|pronounce|${customTagPrefixes.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')}):`)
+    ? new RegExp(`^(r|yt|alt|def|ddg|ggl|bing|sp|amazon|imdb|the|syn|quote|maps|cws|spell|pronounce|${customTagPrefixes.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')}):`)
     : knownSearch;
 
   // ---- DIR syntax: only match valid dir patterns (not 'directory', 'dir is broken', etc.) ----
@@ -592,6 +592,7 @@ function resolveUrl(rawValue, elements) {
   if (/^ddg:/i.test(value))    return `https://duckduckgo.com/?q=${enc(strip('ddg:'))}`;
   if (/^bing:/i.test(value))   return `https://www.bing.com/search?q=${enc(strip('bing:'))}`;
   if (/^ggl:/i.test(value))    return `https://www.google.com/search?q=${enc(strip('ggl:'))}`;
+  if (/^sp:/i.test(value))    return `https://www.startpage.com/do/search?q=${enc(strip('sp:'))}`;
   if (/^amazon:/i.test(value)) return `https://www.amazon.com/s?k=${enc(strip('amazon:'))}`;
   if (/^imdb:/i.test(value))   return `https://www.imdb.com/find?q=${enc(strip('imdb:'))}`;
   if (/^alt:/i.test(value))    return `https://alternativeto.net/browse/search/?q=${enc(strip('alt:'))}`;
@@ -614,6 +615,7 @@ function resolveUrl(rawValue, elements) {
   const q = enc(rawValue.trim());
   if (engine === 'ddg')  return `https://duckduckgo.com/?q=${q}`;
   if (engine === 'bing') return `https://www.bing.com/search?q=${q}`;
+  if (engine === 'sp') return `https://www.startpage.com/do/search?q=${q}`;
   return `https://google.com/search?q=${q}`;
 }
 
@@ -630,7 +632,7 @@ function openInNewTab(url, focus) {
 
 // ---- Enter key routing ----
 function handleEnterKey(rawValue, value, elements) {
-  const isSearch = value.match(/^(r|yt|alt|ddg|imdb|def|the|syn|quote|maps|cws|spell|pronounce):/);
+  const isSearch = value.match(/^(r|yt|alt|ddg|sp|imdb|def|the|syn|quote|maps|cws|spell|pronounce):/);
   const isCommand = value.startsWith(':');
   const isDirCmd = /^dir(\/[a-z]*)?(\/[a-z]*)?:/i.test(rawValue);
   const hasTrailingSpace = /\s$/.test(rawValue);
@@ -646,6 +648,7 @@ function handleEnterKey(rawValue, value, elements) {
     const engine = typeof getStoredSearchEngine === 'function' ? getStoredSearchEngine() : 'google';
     if (engine === 'ddg') navigate(`https://duckduckgo.com/?q=${q}`);
     else if (engine === 'bing') navigate(`https://www.bing.com/search?q=${q}`);
+    else if (engine === 'sp') navigate(`https://www.startpage.com/do/search?q=${q}`);
     else navigate(`https://google.com/search?q=${q}`);
     pushHistory(rawValue.trim());
     return;
