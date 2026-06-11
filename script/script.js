@@ -19,9 +19,6 @@ const CONFIG_PLACEHOLDERS = {
   'config-username': 'e.g., coffeenerd',
   'weather-location': 'e.g., London, Tokyo, New York',
   'time-zone': 'e.g., America/New_York, Europe/London, Asia/Tokyo',
-  'gemini-api-key': 'AIza...',
-  'gemini-model': 'e.g., gemini-2.5-flash-lite (free)',
-  'gemini-system-prompt': 'Optional. Example: You are a concise assistant. Reply in bullet points.',
 };
 
 function initPlaceholders() {
@@ -102,7 +99,7 @@ window.addEventListener('pageshow', (e) => {
 });
 
 document.addEventListener("DOMContentLoaded", async () => {
-  // Wait for extension storage (Gemini API key) to be loaded before init
+  // Wait for extension storage to be loaded before init
   if (window.extStorageReady) await window.extStorageReady;
   initPlaceholders();
   loadTheme();
@@ -145,7 +142,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     ['ip-modal', closeIPInfo],
     ['speed-modal', closeSpeedTest],
     ['spell-modal', closeSpellModal],
-    ['gemini-modal', closeGeminiModal],
     ['customize-modal', closeCustomizeModal],
     ['tags-modal',      closeTagsModal],
     ['dir-modal',       closeDirModal],
@@ -178,7 +174,6 @@ document.addEventListener('keydown', (e) => {
     if (typeof closeIPInfo === 'function') closeIPInfo();
     if (typeof closeSpeedTest === 'function') closeSpeedTest();
     if (typeof closeSpellModal === 'function') closeSpellModal();
-    if (typeof closeGeminiModal === 'function') closeGeminiModal();
     if (typeof closeBookmarksModal === 'function') closeBookmarksModal();
     if (typeof closeCustomizeModal === 'function') closeCustomizeModal();
     if (typeof closeTagsModal === 'function') closeTagsModal();

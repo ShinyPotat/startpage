@@ -17,7 +17,6 @@ const DEFAULT_BOOKMARKS = [
   { href: "https://stuffifound.pages.dev/", title: "StuffIFound" },
   { href: "https://alternativeto.net/", title: "AlternativeTo" },
   { href: "https://stuffifound.pages.dev/", title: "StuffIFound" },
-  { href: "https://gemini.google.com/app", title: "Gemini" },
   { href: "https://www.instagram.com/", title: "Instagram" },
   { href: "https://stuffifound.pages.dev/", title: "StuffIFound" },
   { href: "https://fmhy.net/", title: "FMHY" },
@@ -28,10 +27,6 @@ const DEFAULT_USERNAME = "coffeenerd";
 const DEFAULT_WEATHER_LOCATION = "Gurgaon";
 const DEFAULT_WEATHER_UNIT = "celsius";
 const DEFAULT_TIMEZONE = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
-const DEFAULT_GEMINI_MODEL = "gemini-2.5-flash-lite";
-const DEFAULT_GEMINI_SYSTEM_PROMPT = "";
-const DEFAULT_AI_MODE_ENABLED = false;
-const DEFAULT_AI_ROUTE_BADGE_MODE = "live";
 const DEFAULT_SEARCH_ENGINE = "google"; // "google" | "ddg" | "bing"
 
 const DEFAULT_SHELF_BOOKMARKS = [];
@@ -171,82 +166,6 @@ function saveTimezone(tz) {
   try {
     localStorage.setItem('timezone', tz);
   } catch (e) { console.error(e); }
-}
-
-// ========================================
-// Gemini
-// ========================================
-
-// Gemini API key is stored in extension storage (chrome.storage.local /
-// browser.storage.local) when running as an extension, for security.
-// ext-storage.js populates _cachedGeminiApiKey and resolves extStorageReady.
-// On localhost (no extension API), we fall back to localStorage.
-
-function getStoredGeminiApiKey() {
-  // ext-storage.js sets this cache; falls back to localStorage on localhost
-  if (typeof _cachedGeminiApiKey !== 'undefined') return _cachedGeminiApiKey;
-  return localStorage.getItem('geminiApiKey') || '';
-}
-
-function normalizeGeminiApiKey(key) {
-  return String(key || '').trim();
-}
-
-function saveGeminiApiKey(key) {
-  const normalized = normalizeGeminiApiKey(key);
-
-  // Extension: save to chrome.storage.local / browser.storage.local
-  const extStorage = (typeof browser !== 'undefined' && browser?.storage?.local)
-    ? browser.storage.local
-    : (typeof chrome !== 'undefined' && chrome?.storage?.local)
-      ? chrome.storage.local
-      : null;
-
-  if (extStorage) {
-    // Update in-memory cache used by getStoredGeminiApiKey
-    if (typeof _cachedGeminiApiKey !== 'undefined') {
-      // _cachedGeminiApiKey is declared in ext-storage.js — update via its setter
-      window._cachedGeminiApiKey = normalized;
-    }
-    localStorage.removeItem('geminiApiKey'); // never store in localStorage
-    extStorage.set({ geminiApiKey: normalized });
-    return;
-  }
-
-  // Localhost fallback
-  localStorage.setItem('geminiApiKey', normalized);
-}
-function getStoredGeminiModel() {
-  return localStorage.getItem('geminiModel') || DEFAULT_GEMINI_MODEL;
-}
-function saveGeminiModel(model) {
-  localStorage.setItem('geminiModel', model);
-}
-function getStoredGeminiSystemPrompt() {
-  return localStorage.getItem('geminiSystemPrompt') || DEFAULT_GEMINI_SYSTEM_PROMPT;
-}
-function saveGeminiSystemPrompt(prompt) {
-  localStorage.setItem('geminiSystemPrompt', String(prompt || '').trim());
-}
-
-// ========================================
-// AI Router
-// ========================================
-function getStoredAiModeEnabled() {
-  const stored = localStorage.getItem('aiModeEnabled');
-  if (stored === null) return DEFAULT_AI_MODE_ENABLED;
-  return stored === 'true';
-}
-function saveAiModeEnabled(enabled) {
-  localStorage.setItem('aiModeEnabled', enabled ? 'true' : 'false');
-}
-function getStoredAiRouteBadgeMode() {
-  const mode = (localStorage.getItem('aiRouteBadgeMode') || DEFAULT_AI_ROUTE_BADGE_MODE).toLowerCase();
-  return ['live', 'route', 'off'].includes(mode) ? mode : DEFAULT_AI_ROUTE_BADGE_MODE;
-}
-function saveAiRouteBadgeMode(mode) {
-  const normalized = String(mode || '').toLowerCase();
-  localStorage.setItem('aiRouteBadgeMode', ['live', 'route', 'off'].includes(normalized) ? normalized : DEFAULT_AI_ROUTE_BADGE_MODE);
 }
 
 // ========================================

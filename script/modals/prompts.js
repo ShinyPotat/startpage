@@ -6,8 +6,6 @@ const DEFAULT_PROMPTS = [
   "search anything...",
   ":help → commands",
   ":config → settings",
-  "ai:directions to home → maps",
-  ":aimode → toggle no-prefix AI routing",
   "yt:query → youtube",
   "maps:location → google maps",
   "dir/books: dune → open directory",

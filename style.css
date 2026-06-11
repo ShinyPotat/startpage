@@ -407,58 +407,6 @@ ul li a span {
   display: flex;
 }
 
-.ai-route-badge {
-  display: none;
-  padding: 0 10px;
-  border-color: transparent;
-  opacity: 0;
-  transform: translateY(-8px) scale(0.985);
-  transition: opacity 0.18s ease, transform 0.18s ease, border-color 0.16s ease, background 0.16s ease;
-  border-radius: 7px;
-  border: 1px solid transparent;
-  background: linear-gradient(135deg, rgba(243, 156, 18, 0.17), rgba(243, 156, 18, 0.07));
-  color: var(--terminal-text);
-  font-family: var(--monospace-font-family);
-  font-size: 13px;
-  line-height: 1.45;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  overflow: auto;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
-  pointer-events: none;
-}
-
-.ai-route-badge.show {
-  display: block;
-  flex: 1 1 100%;
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  margin-top: 2px;
-  max-height: 110px;
-  padding: 8px 10px;
-  border-color: rgba(243, 156, 18, 0.45);
-}
-
-.ai-route-badge.preview {
-  border-color: rgba(102, 126, 234, 0.52);
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.18), rgba(102, 126, 234, 0.07));
-}
-
-.ai-route-badge.bump {
-  animation: aiBadgeBump 170ms ease;
-  will-change: transform, opacity;
-}
-
-@keyframes aiBadgeBump {
-  0% {
-    transform: translateY(-8px) scale(0.985);
-  }
-
-  100% {
-    transform: translateY(0) scale(1);
-  }
-}
 
 #terminal-input {
   background: none;
@@ -1129,65 +1077,6 @@ ul li a span {
 
 .spell-word-fix:hover {
   background: rgba(102, 126, 234, 0.25) !important;
-}
-
-/* Gemini Modal */
-.gemini-content {
-  max-width: 760px;
-}
-
-.gemini-meta-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.gemini-model-badge {
-  font-family: var(--monospace-font-family);
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--color-primary);
-  background: rgba(102, 126, 234, 0.14);
-  border: 1px solid rgba(102, 126, 234, 0.28);
-  border-radius: 999px;
-  padding: 5px 10px;
-}
-
-.gemini-status {
-  font-size: 13px;
-  opacity: 0.75;
-  margin-bottom: 10px;
-}
-
-.gemini-system-state {
-  font-family: var(--monospace-font-family);
-  font-size: 12px;
-  opacity: 0.65;
-  margin-bottom: 8px;
-}
-
-.gemini-response-area {
-  min-height: 120px;
-  max-height: 48vh;
-  overflow: auto;
-  white-space: pre-wrap;
-  line-height: 1.55;
-  font-family: var(--monospace-font-family);
-  font-size: 14px;
-  padding: 15px;
-  border-radius: 8px;
-  border: 1px solid var(--card-border);
-  background: var(--terminal-bg);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-}
-
-.gemini-response-area.gemini-error {
-  border-color: rgba(231, 76, 60, 0.45);
-  color: var(--color-error);
 }
 
 /* Bookmark Matching Styles */

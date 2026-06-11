@@ -25,7 +25,7 @@ const TOUR_STEPS = [
     },
   },
   {
-    tip: "Type :config to open settings — username, weather location, timezone, Gemini API key.",
+    tip: "Type :config to open settings — username, weather location, timezone.",
     type: ':config',
     execute: () => { if (typeof openConfig === 'function') openConfig(); },
     afterHide: () => { if (typeof closeConfig === 'function') closeConfig(); },

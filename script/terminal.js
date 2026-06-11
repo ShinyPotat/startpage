@@ -192,11 +192,8 @@ function updateSyntaxHighlight(rawValue) {
     'q': 'quote:',
     'm': 'maps:',
     'c': 'cws:',
-    'g': 'gem:',
-    'gg': 'ggl:',
-    'ge': 'gemini:',
+    'g': 'ggl:',
     'bi': 'bing:',
-    'ai': 'ai:',
     'sp': 'spell:',
     'pr': 'pronounce:',
     ':c': ':config',
@@ -212,11 +209,8 @@ function updateSyntaxHighlight(rawValue) {
     ':i': ':ipconfig',
     ':l': ':light',
     ':h': ':help',
-    ':ha': ':help_ai_router',
     ':hi': ':history',
     ':to': ':tour',
-    ':aim': ':aimode',
-    ':ge': ':gemini',
     ':n': ':netspeed',
     ':w': ':weather',
     ':ti': ':time',
@@ -242,11 +236,11 @@ function updateSyntaxHighlight(rawValue) {
   const customTagPrefixes = customTags.map(t => t.prefix).filter(Boolean);
 
   const themeCommands = [':dark', ':black', ':amoled', ':light', ':nord', ':newspaper', ':coffee', ':root', ':neon'];
-  const knownCommands = [':help', ':help_ai_router', ':aimode', ':bookmarks', ':bm', ':ipconfig', ':ip', ':netspeed', ':speed', ':config', ':customize', ':custom', ':tags', ':dir', ':dirconfig', ':prompts', ':weather', ':time', ':gemini', ':update', ':export', ':import', ':reset', ':history', ':tour', ':hacker', ':cyberpunk', ...themeCommands];
+  const knownCommands = [':help', ':bookmarks', ':bm', ':ipconfig', ':ip', ':netspeed', ':speed', ':config', ':customize', ':custom', ':tags', ':dir', ':dirconfig', ':prompts', ':weather', ':time', ':update', ':export', ':import', ':reset', ':history', ':tour', ':hacker', ':cyberpunk', ...themeCommands];
   const versionCommands = [':version', ':ver', ':update'];
-  const knownSearch = /^(r|yt|alt|def|ddg|ggl|bing|amazon|imdb|the|syn|quote|maps|cws|spell|pronounce|gem|gemini|ai):/;
+  const knownSearch = /^(r|yt|alt|def|ddg|ggl|bing|amazon|imdb|the|syn|quote|maps|cws|spell|pronounce):/;
   const knownSearchDynamic = customTagPrefixes.length
-    ? new RegExp(`^(r|yt|alt|def|ddg|ggl|bing|amazon|imdb|the|syn|quote|maps|cws|spell|pronounce|gem|gemini|ai|${customTagPrefixes.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')}):`)
+    ? new RegExp(`^(r|yt|alt|def|ddg|ggl|bing|amazon|imdb|the|syn|quote|maps|cws|spell|pronounce|${customTagPrefixes.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')}):`)
     : knownSearch;
 
   // ---- DIR syntax: only match valid dir patterns (not 'directory', 'dir is broken', etc.) ----
@@ -452,17 +446,6 @@ function handleInput(input, elements) {
       }
     }
 
-    // 2. Update AI badge / route preview
-    if (/^ai\s*:/i.test(rawValue)) {
-      const aiQuery = rawValue.replace(/^ai\s*:/i, "").trim();
-      previewAiRoute(aiQuery);
-    } else if (bookmarkMatch) {
-      if (getStoredAiModeEnabled()) {
-        showAiRouteBadge(bookmarkMatch.title, rawValue.trim(), 0, 'preview');
-      }
-    } else {
-      hideAiRouteBadge();
-    }
   });
 }
 
@@ -586,7 +569,7 @@ function resolveUrl(rawValue, elements) {
   const value = rawValue.trim().toLowerCase();
   if (!value) return null;
 
-  const isCommand = value.startsWith(':') && !value.match(/^:(gemini)$/);
+  const isCommand = value.startsWith(':');
   if (isCommand) return null;
 
   // Dir command
@@ -647,7 +630,7 @@ function openInNewTab(url, focus) {
 
 // ---- Enter key routing ----
 function handleEnterKey(rawValue, value, elements) {
-  const isSearch = value.match(/^(r|yt|alt|ddg|imdb|def|the|syn|quote|maps|cws|spell|pronounce|gem|gemini|ai):/);
+  const isSearch = value.match(/^(r|yt|alt|ddg|imdb|def|the|syn|quote|maps|cws|spell|pronounce):/);
   const isCommand = value.startsWith(':');
   const isDirCmd = /^dir(\/[a-z]*)?(\/[a-z]*)?:/i.test(rawValue);
   const hasTrailingSpace = /\s$/.test(rawValue);
@@ -681,18 +664,10 @@ function handleEnterKey(rawValue, value, elements) {
       if (typeof showLoading === 'function') showLoading();
       window.location.href = href;
     };
-    if (getStoredAiModeEnabled()) {
-      showAiRouteBadge(bookmarkMatch.title, rawValue.trim(), AI_ROUTE_BADGE_NAV_DELAY_MS).then(() => {
-        goToBookmark(bookmarkMatch.href);
-      });
-    } else {
-      goToBookmark(bookmarkMatch.href);
-    }
+    goToBookmark(bookmarkMatch.href);
   }
 
-  if (!matched && getStoredAiModeEnabled() && rawValue.trim()) {
-    routeSemanticIntent(rawValue.trim());
-  } else if (!matched) {
+  if (!matched) {
     handleSpecialCommands(rawValue.trim());
   }
   pushHistory(rawValue.trim());
