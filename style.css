@@ -185,6 +185,19 @@ html.neon-mode body {
   background: radial-gradient(circle at center, #1a1a1a 0%, #0d0d0d 100%);
 }
 
+/* Catppuccin Mocha Theme */
+html.catppuccin-mode body {
+  --background-color: #1e1e2e;
+  --text-color: #cdd6f4;
+  --card-background: rgba(49, 50, 68, 0.6);
+  --card-border: rgba(88, 91, 112, 0.4);
+  --terminal-bg: rgba(30, 30, 46, 0.9);
+  --terminal-text: #cdd6f4;
+  --shadow-color: rgba(0, 0, 0, 0.4);
+  --link-background: rgba(205, 214, 244, 0.05);
+  --link-hover: rgba(205, 214, 244, 0.1);
+}
+
 html.newspaper-mode body {
   letter-spacing: -0.01em;
 }
@@ -1376,7 +1389,7 @@ ul li a span {
   color-scheme: dark;
 }
 
-html:not(.dark-mode):not(.black-mode):not(.nord-mode):not(.coffee-mode):not(.root-mode):not(.neon-mode) .customize-swatch {
+html:not(.dark-mode):not(.black-mode):not(.nord-mode):not(.coffee-mode):not(.root-mode):not(.neon-mode):not(.catppuccin-mode) .customize-swatch {
   color-scheme: light;
 }
 

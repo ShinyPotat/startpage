@@ -2,16 +2,17 @@
   try {
     const theme = localStorage.getItem('theme') || 'light';
     const backgroundByTheme = {
-      light:     '#ffffff',
-      dark:      '#2d3436',
-      black:     '#000000',
-      nord:      '#2e3440',
-      newspaper: '#f4efdf',
-      coffee:    '#2b1b17',
-      root:      '#050505',
-      neon:      '#0d0d0d'
+      light:      '#ffffff',
+      dark:       '#2d3436',
+      black:      '#000000',
+      nord:       '#2e3440',
+      newspaper:  '#f4efdf',
+      coffee:     '#2b1b17',
+      root:       '#050505',
+      neon:       '#0d0d0d',
+      catppuccin: '#1e1e2e'
     };
-    const darkThemes = new Set(['dark', 'black', 'nord', 'coffee', 'root', 'neon']);
+    const darkThemes = new Set(['dark', 'black', 'nord', 'coffee', 'root', 'neon', 'catppuccin']);
 
     document.documentElement.style.backgroundColor = backgroundByTheme[theme] || '#ffffff';
     document.documentElement.style.colorScheme = darkThemes.has(theme) ? 'dark' : 'light';

@@ -12,14 +12,15 @@ const SYNTAX_COLOR_DEFS = [
 ];
 
 const THEME_DEFS = [
-  { value: 'light',     label: 'Light'     },
-  { value: 'dark',      label: 'Dark'      },
-  { value: 'black',     label: 'Black'     },
-  { value: 'nord',      label: 'Nord'      },
-  { value: 'newspaper', label: 'Newspaper' },
-  { value: 'coffee',    label: 'Coffee'    },
-  { value: 'root',      label: 'Root'      },
-  { value: 'neon',      label: 'Neon'      },
+  { value: 'light',      label: 'Light'      },
+  { value: 'dark',       label: 'Dark'       },
+  { value: 'black',      label: 'Black'      },
+  { value: 'nord',       label: 'Nord'       },
+  { value: 'newspaper',  label: 'Newspaper'  },
+  { value: 'coffee',     label: 'Coffee'     },
+  { value: 'root',       label: 'Root'       },
+  { value: 'neon',       label: 'Neon'       },
+  { value: 'catppuccin', label: 'Catppuccin' },
 ];
 
 // ---- Open / Close ----
